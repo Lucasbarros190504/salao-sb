@@ -50,6 +50,17 @@ public class ClienteController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/clientes/{id}")
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente){
+        Optional<Cliente> clienteAtualizado = clienteService.atualizarCliente(id, cliente);
+
+        if(clienteAtualizado.isPresent()){
+            return ResponseEntity.ok(clienteAtualizado.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
 
 
 

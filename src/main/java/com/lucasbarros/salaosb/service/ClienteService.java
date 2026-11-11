@@ -37,6 +37,24 @@ public class ClienteService {
 
     }
 
+    public Optional<Cliente> atualizarCliente(Long id, Cliente dadosAtualizados){
+        Optional<Cliente> clienteEncontrado = clienteRepository.findById(id);
+        if (clienteEncontrado.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Cliente clienteExistente = clienteEncontrado.get();
+
+        clienteExistente.setNome(dadosAtualizados.getNome());
+        clienteExistente.setEmail(dadosAtualizados.getEmail());
+        clienteExistente.setTelefone(dadosAtualizados.getTelefone());
+        clienteExistente.setCpf(dadosAtualizados.getCpf());
+
+        Cliente clienteSalvo = clienteRepository.save(clienteExistente);
+
+        return Optional.of(clienteSalvo);
+    }
+
 
 
 
