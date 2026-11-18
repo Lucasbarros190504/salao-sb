@@ -5,6 +5,7 @@ import com.lucasbarros.salaosb.model.Cliente;
 import com.lucasbarros.salaosb.service.ClienteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class ClienteController {
     }
 
     @PostMapping("/clientes")
-    public Cliente cadastrarCliente(@RequestBody Cliente cliente){
+    public Cliente cadastrarCliente(@Valid @RequestBody Cliente cliente){
         return clienteService.cadastrarCliente(cliente);
     }
 
@@ -51,7 +52,7 @@ public class ClienteController {
     }
 
     @PutMapping("/clientes/{id}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente){
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @Valid @RequestBody Cliente cliente){
         Optional<Cliente> clienteAtualizado = clienteService.atualizarCliente(id, cliente);
 
         if(clienteAtualizado.isPresent()){
