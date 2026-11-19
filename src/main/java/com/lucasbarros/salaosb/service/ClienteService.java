@@ -1,6 +1,7 @@
 package com.lucasbarros.salaosb.service;
 
 
+import com.lucasbarros.salaosb.exception.ClienteDuplicadoException;
 import com.lucasbarros.salaosb.model.Cliente;
 import com.lucasbarros.salaosb.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,12 @@ public class ClienteService {
     }
 
     public Cliente cadastrarCliente(Cliente cliente){
+        if (clienteRepository.existsByEmail(cliente.getEmail())){
+            throw new ClienteDuplicadoException("Email de cliente ja cadastrado");
+        }
+        if (clienteRepository.existsByCpf(cliente.getCpf())){
+            throw new ClienteDuplicadoException("CPF de cliente ja cadastrado");
+        }
         return clienteRepository.save(cliente);
     }
 

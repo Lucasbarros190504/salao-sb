@@ -1,5 +1,6 @@
 package com.lucasbarros.salaosb.exception;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +26,13 @@ public class GlobalExceptionHandler {
         });  
 
         return ResponseEntity.badRequest().body(erros);
+    }
+
+    @ExceptionHandler(ClienteDuplicadoException.class)
+    public ResponseEntity<String> tratarErrosDeDuplicacao(ClienteDuplicadoException message){
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(message.getMessage());
     }
 }
 
