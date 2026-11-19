@@ -19,10 +19,10 @@ public class ClienteService {
 
     public Cliente cadastrarCliente(Cliente cliente){
         if (clienteRepository.existsByEmail(cliente.getEmail())){
-            throw new ClienteDuplicadoException("Email de cliente ja cadastrado");
+            throw new ClienteDuplicadoException("Este e-mail já está em uso");
         }
         if (clienteRepository.existsByCpf(cliente.getCpf())){
-            throw new ClienteDuplicadoException("CPF de cliente ja cadastrado");
+            throw new ClienteDuplicadoException("Este CPF já está em uso");
         }
         return clienteRepository.save(cliente);
     }
@@ -52,6 +52,13 @@ public class ClienteService {
 
         Cliente clienteExistente = clienteEncontrado.get();
 
+        if (clienteRepository.existsByEmailAndIdNot(dadosAtualizados.getEmail(),id)){
+            throw new ClienteDuplicadoException("Este e-mail já está em uso");
+        }
+
+        if(clienteRepository.existsByCpfAndIdNot(dadosAtualizados.getCpf(),id)){
+            throw new ClienteDuplicadoException("Este CPF já está em uso");
+        }
         clienteExistente.setNome(dadosAtualizados.getNome());
         clienteExistente.setEmail(dadosAtualizados.getEmail());
         clienteExistente.setTelefone(dadosAtualizados.getTelefone());
