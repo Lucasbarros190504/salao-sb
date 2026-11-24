@@ -29,10 +29,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ClienteDuplicadoException.class)
-    public ResponseEntity<String> tratarErrosDeDuplicacao(ClienteDuplicadoException message){
+    public ResponseEntity<Map<String, String>> tratarErrosDeDuplicacao(ClienteDuplicadoException excecao){
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .body(message.getMessage());
+                .body(Map.of("erro", excecao.getMessage()));
     }
 }
 
